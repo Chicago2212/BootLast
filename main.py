@@ -22,6 +22,7 @@ def login():
     if form.validate_on_submit():
         sessions = db_session.create_session()
         user = sessions.query(users.User).filter(users.User.email == form.email.data).first()
+        # user = None
         if user and user.password == form.password.data:
             # login_user(user, remember=form.remember_me.data)
             return redirect('/')
@@ -40,13 +41,12 @@ def reg():
                 name=form.name.data,
                 email=form.email.data,
                 telephone=form.telephone.data,
-                password=form.password.data
+                password=generate_password_hash(form.password.data)
             )
-            user.set_password(form.password.data)
             sessions.add(user)
             sessions.commit()
         except:
-            return render_template('register.html', message='Такой пользователь есть!')
+            return render_template('register.html', message='Такой пользователь есть!', form=form)
         return render_template('base.html', message='Вы зарегистрировались!')
     return render_template('register.html', form=form)
 
