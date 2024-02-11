@@ -26,7 +26,10 @@ def login():
         if user and user.password == form.password.data:
             # login_user(user, remember=form.remember_me.data)
             return redirect('/')
-        return render_template("login.html", message="Пользователь не найден")
+        elif user is None:
+            return render_template("login.html", message="Пользователь не найден")
+        elif user and user.password != form.password.data:
+            return render_template("login.html", message="Пароли не совпадают")
     return render_template('login.html', form=form)
 
 
@@ -41,7 +44,7 @@ def reg():
                 name=form.name.data,
                 email=form.email.data,
                 telephone=form.telephone.data,
-                password=generate_password_hash(form.password.data)
+                password=form.password.data
             )
             sessions.add(user)
             sessions.commit()

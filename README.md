@@ -19,6 +19,7 @@ pip install sqlalchemy-serializer
 Модули:
 1. sqlite3
 2. sqlalchemy
-3. login_user
-4. flask, jinja(шаблоинизатор)
+3. login_user(flask-login)
+4. flask, jinja(шаблонизатор)
 5. flask_wtf
+6. Миграция данных
